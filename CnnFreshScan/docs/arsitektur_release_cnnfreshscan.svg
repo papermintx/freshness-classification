@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1180" viewBox="0 0 1800 1180">
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#111827"/>
+    </marker>
+    <style>
+      .title { font: 700 34px Arial, sans-serif; fill: #111827; }
+      .lane-title { font: 700 22px Arial, sans-serif; fill: #111827; }
+      .box-title { font: 700 18px Arial, sans-serif; fill: #0f172a; }
+      .box-text { font: 500 15px Arial, sans-serif; fill: #334155; }
+      .small { font: 500 14px Arial, sans-serif; fill: #475569; }
+      .arrow-label { font: 600 13px Arial, sans-serif; fill: #1f2937; }
+      .outer { fill: #ffffff; stroke: #111827; stroke-width: 3; rx: 12; }
+      .lane-presentation { fill: #dbeafe; stroke: #2563eb; stroke-width: 2; rx: 10; }
+      .lane-domain { fill: #dcfce7; stroke: #16a34a; stroke-width: 2; rx: 10; }
+      .lane-data { fill: #fef3c7; stroke: #d97706; stroke-width: 2; rx: 10; }
+      .lane-inference { fill: #f1f5f9; stroke: #64748b; stroke-width: 2; rx: 10; }
+      .box { fill: #ffffff; stroke: #2563eb; stroke-width: 2; rx: 10; }
+      .domain-box { fill: #ffffff; stroke: #16a34a; stroke-width: 2; rx: 10; }
+      .data-box { fill: #ffffff; stroke: #d97706; stroke-width: 2; rx: 10; }
+      .infer-box { fill: #ffffff; stroke: #64748b; stroke-width: 2; rx: 10; }
+      .start-end { fill: #60a5fa; stroke: #1d4ed8; stroke-width: 2; rx: 28; }
+      .start-text { font: 700 17px Arial, sans-serif; fill: #ffffff; }
+      .arrow { stroke: #111827; stroke-width: 2.4; fill: none; marker-end: url(#arrow); }
+      .return { stroke: #334155; stroke-width: 2.2; fill: none; marker-end: url(#arrow); stroke-dasharray: 7 5; }
+      .note { fill: #fff7ed; stroke: #fb923c; stroke-width: 2; rx: 10; }
+    </style>
+  </defs>
+
+  <rect x="24" y="24" width="1752" height="1132" class="outer"/>
+  <text x="900" y="74" text-anchor="middle" class="title">Arsitektur Release CnnFreshScan</text>
+
+  <rect x="60" y="105" width="1680" height="300" class="lane-presentation"/>
+  <text x="84" y="137" class="lane-title">Presentation Layer - Jetpack Compose + MVVM</text>
+
+  <rect x="60" y="430" width="1680" height="205" class="lane-domain"/>
+  <text x="84" y="462" class="lane-title">Domain Layer - Use Case dan Aturan Bisnis</text>
+
+  <rect x="60" y="660" width="1680" height="240" class="lane-data"/>
+  <text x="84" y="692" class="lane-title">Data Layer - Implementasi Pipeline Klasifikasi</text>
+
+  <rect x="60" y="925" width="1680" height="145" class="lane-inference"/>
+  <text x="84" y="957" class="lane-title">Inference Pipeline - TensorFlow Lite On-Device</text>
+
+  <rect x="88" y="220" width="100" height="52" class="start-end"/>
+  <text x="138" y="252" text-anchor="middle" class="start-text">Mulai</text>
+
+  <rect x="230" y="150" width="265" height="170" class="box"/>
+  <text x="362" y="180" text-anchor="middle" class="box-title">CameraScreen / Compose UI</text>
+  <text x="252" y="212" class="box-text">- CameraX Preview</text>
+  <text x="252" y="238" class="box-text">- ROI Overlay</text>
+  <text x="252" y="264" class="box-text">- Tombol Capture</text>
+  <text x="252" y="290" class="box-text">- Tombol Galeri</text>
+
+  <rect x="545" y="140" width="250" height="86" class="box"/>
+  <text x="670" y="174" text-anchor="middle" class="box-title">CameraViewModel</text>
+  <text x="570" y="202" class="box-text">Mengelola live inference</text>
+
+  <rect x="545" y="260" width="250" height="86" class="box"/>
+  <text x="670" y="294" text-anchor="middle" class="box-title">ResultViewModel</text>
+  <text x="570" y="322" class="box-text">Mengelola hasil akhir</text>
+
+  <rect x="875" y="150" width="230" height="74" class="box"/>
+  <text x="990" y="184" text-anchor="middle" class="box-title">Frame Kamera</text>
+  <text x="908" y="211" class="box-text">Dari tombol capture</text>
+
+  <rect x="875" y="260" width="230" height="74" class="box"/>
+  <text x="990" y="294" text-anchor="middle" class="box-title">Gambar Galeri</text>
+  <text x="908" y="321" class="box-text">Dari tombol galeri</text>
+
+  <rect x="1210" y="155" width="280" height="150" class="box"/>
+  <text x="1350" y="185" text-anchor="middle" class="box-title">ResultScreen / Kartu Hasil</text>
+  <text x="1234" y="218" class="box-text">- Foto hasil analisis</text>
+  <text x="1234" y="244" class="box-text">- Label klasifikasi</text>
+  <text x="1234" y="270" class="box-text">- Confidence score</text>
+  <text x="1234" y="296" class="box-text">- Saran penanganan</text>
+
+  <rect x="1578" y="220" width="100" height="52" class="start-end"/>
+  <text x="1628" y="252" text-anchor="middle" class="start-text">Selesai</text>
+
+  <rect x="250" y="500" width="280" height="84" class="domain-box"/>
+  <text x="390" y="533" text-anchor="middle" class="box-title">GetRoiConfigurationUseCase</text>
+  <text x="278" y="562" class="box-text">Ukuran dan posisi ROI</text>
+
+  <rect x="680" y="488" width="280" height="92" class="domain-box"/>
+  <text x="820" y="522" text-anchor="middle" class="box-title">AnalyzeProduceUseCase</text>
+  <text x="710" y="552" class="box-text">Mengatur alur klasifikasi</text>
+
+  <rect x="1110" y="488" width="260" height="92" class="domain-box"/>
+  <text x="1240" y="522" text-anchor="middle" class="box-title">ProduceRepository</text>
+  <text x="1145" y="552" class="box-text">Abstraksi data/model</text>
+
+  <rect x="140" y="735" width="245" height="90" class="data-box"/>
+  <text x="262" y="768" text-anchor="middle" class="box-title">ProduceRepositoryImpl</text>
+  <text x="170" y="798" class="box-text">Pipeline analisis citra</text>
+
+  <rect x="455" y="735" width="190" height="90" class="data-box"/>
+  <text x="550" y="768" text-anchor="middle" class="box-title">RoiCropper</text>
+  <text x="483" y="798" class="box-text">Crop area ROI</text>
+
+  <rect x="710" y="735" width="190" height="90" class="data-box"/>
+  <text x="805" y="768" text-anchor="middle" class="box-title">RoiGeometry</text>
+  <text x="735" y="798" class="box-text">Hitung batas crop</text>
+
+  <rect x="965" y="735" width="230" height="90" class="data-box"/>
+  <text x="1080" y="768" text-anchor="middle" class="box-title">ImagePreprocessor</text>
+  <text x="995" y="798" class="box-text">Resize 224 x 224</text>
+
+  <rect x="1260" y="735" width="220" height="90" class="data-box"/>
+  <text x="1370" y="768" text-anchor="middle" class="box-title">TFLiteClassifier</text>
+  <text x="1290" y="798" class="box-text">Load dan inferensi model</text>
+
+  <rect x="670" y="975" width="460" height="72" class="infer-box"/>
+  <text x="900" y="1004" text-anchor="middle" class="box-title">TensorFlow Lite Model Float16</text>
+  <text x="715" y="1031" class="box-text">Input: 224 x 224 x 3 RGB, normalisasi [-1, 1], output probabilitas 12 kelas</text>
+
+  <rect x="165" y="1085" width="1470" height="45" class="note"/>
+  <text x="900" y="1114" text-anchor="middle" class="small">Release build hanya berisi kamera, ROI, galeri, klasifikasi TensorFlow Lite on-device, hasil prediksi, saran penanganan, dan simpan ke galeri. Tidak ada fitur debug atau benchmark.</text>
+
+  <path d="M188 246 L230 246" class="arrow"/>
+  <path d="M495 184 L545 184" class="arrow"/>
+  <path d="M495 298 L545 298" class="arrow"/>
+  <path d="M795 184 L875 184" class="arrow"/>
+  <path d="M795 298 L875 298" class="arrow"/>
+  <path d="M1105 187 C1148 187 1152 183 1210 183" class="arrow"/>
+  <path d="M1105 297 C1154 297 1152 275 1210 275" class="arrow"/>
+  <path d="M1490 246 L1578 246" class="arrow"/>
+
+  <path d="M390 500 C390 430 360 395 360 320" class="return"/>
+  <text x="205" y="440" class="arrow-label">konfigurasi ROI ke overlay</text>
+
+  <path d="M670 346 C670 415 755 438 800 488" class="arrow"/>
+  <path d="M990 334 C990 410 900 440 840 488" class="arrow"/>
+  <path d="M820 580 L820 700 C820 710 262 710 262 735" class="arrow"/>
+  <path d="M960 534 L1110 534" class="arrow"/>
+  <path d="M1240 580 L1240 625 C1240 645 262 645 262 735" class="arrow"/>
+
+  <path d="M385 780 L455 780" class="arrow"/>
+  <text x="398" y="766" class="arrow-label">crop ROI</text>
+  <path d="M645 780 L710 780" class="arrow"/>
+  <path d="M900 780 L965 780" class="arrow"/>
+  <text x="914" y="766" class="arrow-label">resize</text>
+  <path d="M1195 780 L1260 780" class="arrow"/>
+  <text x="1199" y="766" class="arrow-label">tensor [-1,1]</text>
+
+  <path d="M1370 825 C1370 925 1130 900 1030 975" class="arrow"/>
+  <path d="M770 975 C650 902 550 875 550 825" class="return"/>
+  <text x="623" y="925" class="arrow-label">probabilitas kelas</text>
+
+  <path d="M1260 735 C1198 680 1060 632 960 554" class="return"/>
+  <path d="M680 534 C610 468 535 402 670 346" class="return"/>
+  <path d="M960 520 C1080 420 1205 360 1280 305" class="return"/>
+  <text x="1040" y="432" class="arrow-label">label + confidence</text>
+</svg>

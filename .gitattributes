@@ -1,0 +1,19 @@
+﻿# Normalize line endings
+* text=auto
+
+# Force LF for shell scripts (Android gradlew)
+*.sh text eol=lf
+gradlew text eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.tflite binary
+*.apk binary
+*.aab binary
+*.jar binary
+*.zip binary
+*.mp4 binary

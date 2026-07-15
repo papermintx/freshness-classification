@@ -1,0 +1,33 @@
+package com.skripsi.core.domain.model
+
+data class CameraRoiInferenceResult(
+    val timestamp: String,
+    val sessionId: String,
+    val deviceName: String,
+    val androidVersion: String,
+    val modelName: String,
+    val modelFormat: String,
+    val captureIndex: Int,
+    val distanceCm: Int?,
+    val sourceImageWidth: Int,
+    val sourceImageHeight: Int,
+    val roiImageWidth: Int,
+    val roiImageHeight: Int,
+    val modelInputWidth: Int,
+    val modelInputHeight: Int,
+    val intervalSincePreviousInferenceMs: Double,
+    val cameraLensFacing: String,
+    val cameraFpsRange: String,
+    val cameraMaxFps: Int,
+    val cameraMegapixels: Double,
+    val cameraResolution: String,
+    val actualLabel: String,
+    val predictedLabel: String,
+    val confidence: Float,
+    val isCorrect: Boolean,
+    val roiCropTimeMs: Double,
+    val preprocessingTimeMs: Double,
+    val inferenceTimeMs: Double,
+    val totalTimeMs: Double,
+    val savedRoiImagePath: String?
+)

@@ -1,0 +1,71 @@
+﻿# ============================================================
+# .gitignore — Root Lampiran Kode Skripsi
+# ============================================================
+
+# ------------------------------------------------------------
+# DATASET — Abaikan semua gambar dataset (ukuran terlalu besar)
+# Dataset dapat diunduh dari link di README masing-masing
+# ------------------------------------------------------------
+modeling/dataset/
+visualisasi_pengujian_inferensi_dan_jarak/dataset/
+
+# ------------------------------------------------------------
+# Android Build (CnnFreshScan)
+# ------------------------------------------------------------
+CnnFreshScan/.gradle/
+CnnFreshScan/build/
+CnnFreshScan/**/build/
+CnnFreshScan/local.properties
+CnnFreshScan/*.apk
+CnnFreshScan/*.aab
+CnnFreshScan/*.aar
+CnnFreshScan/*.ap_
+CnnFreshScan/*.jks
+CnnFreshScan/*.keystore
+CnnFreshScan/*.pk8
+CnnFreshScan/*.pem
+CnnFreshScan/captures/
+CnnFreshScan/.kotlin/
+
+# Android Studio / IntelliJ IDEA
+CnnFreshScan/.idea/caches/
+CnnFreshScan/.idea/libraries/
+CnnFreshScan/.idea/modules.xml
+CnnFreshScan/.idea/workspace.xml
+CnnFreshScan/.idea/navEditor.xml
+CnnFreshScan/.idea/assetWizardSettings.xml
+CnnFreshScan/.idea/deploymentTargetSelector.xml
+CnnFreshScan/.idea/androidTestResultsUserPreferences.xml
+CnnFreshScan/.idea/git_toolbox_prj.cfg
+CnnFreshScan/.idea/git_toolbox_prj.xml
+CnnFreshScan/.idea/vcs.xml
+CnnFreshScan/*.iml
+CnnFreshScan/*.ipr
+CnnFreshScan/*.iws
+
+# ------------------------------------------------------------
+# Python (Modeling & Visualisasi)
+# ------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.env
+.venv/
+venv/
+env/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Output sementara
+modeling/outputs/cleaned_data/
+modeling/outputs/cleaned_testings/
+
+# ------------------------------------------------------------
+# OS-specific
+# ------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log

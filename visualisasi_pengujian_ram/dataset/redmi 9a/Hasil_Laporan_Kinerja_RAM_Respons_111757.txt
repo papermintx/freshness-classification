@@ -1,0 +1,82 @@
+====================================================
+      LAPORAN LENGKAP PENGUJIAN RAM & RESPONSE TIME
+====================================================
+Tanggal Pengujian : 10-07-2026 02:57:41
+Merk / Model HP   : Xiaomi M2006C3LG
+Versi Android     : Android 10 (API 29)
+====================================================
+
+A. WAKTU STARTUP & RAM AWAL
+   - Durasi App Startup   : 12080 ms
+   - RAM JVM Heap awal    : 5.97 MB
+   - RAM Native Heap awal : 11.83 MB
+   - Total RAM (PSS) awal : 143.16 MB
+
+B. RESPONSE TIME SWITCH KAMERA (LENS FACING)
+   - Kamera Belakang -> Depan : 853 ms
+   - Kamera Depan -> Belakang : 1057 ms
+
+C. PENGUJIAN KINERJA INFERENSI (10 KALI RUN)
+   1. METODE A: MOCK BITMAP IN-MEMORY (224x224)
+      * Run #1 : 69 ms
+      * Run #2 : 71 ms
+      * Run #3 : 68 ms
+      * Run #4 : 70 ms
+      * Run #5 : 74 ms
+      * Run #6 : 96 ms
+      * Run #7 : 66 ms
+      * Run #8 : 72 ms
+      * Run #9 : 80 ms
+      * Run #10 : 66 ms
+      * Total Durasi  : 732 ms
+      * Rata-rata     : 73.20 ms
+      * RAM Sebelum   : 7.38 MB (JVM), 18.16 MB (Native), 143.16 MB (PSS)
+      * RAM Setelah   : 15.60 MB (JVM), 19.25 MB (Native), 143.16 MB (PSS)
+      * RAM Selisih   : 8.23 MB (JVM), 1.08 MB (Native), 0.00 MB (PSS)
+
+   2. METODE B: ALIRAN PREVIEW KAMERA LANGSUNG (LIVE FEED)
+      * Frame #1 : 76 ms
+      * Frame #2 : 69 ms
+      * Frame #3 : 67 ms
+      * Frame #4 : 72 ms
+      * Frame #5 : 75 ms
+      * Frame #6 : 73 ms
+      * Frame #7 : 77 ms
+      * Frame #8 : 78 ms
+      * Frame #9 : 72 ms
+      * Frame #10 : 75 ms
+      * Rata-rata     : 73.40 ms
+      * RAM Saat Live : 15.60 MB (JVM), 19.26 MB (Native), 143.16 MB (PSS)
+
+   3. PERBANDINGAN KINERJA (MOCK VS KAMERA)
+      * Selisih Rata-rata Waktu : 0.20 ms (Kamera vs Mock)
+      * Selisih RAM PSS Aktif   : 0.00 MB (Kamera vs Mock)
+
+D. TRANSISI NAVIGASI HALAMAN TENTANG (ABOUT SCREEN)
+   - Response Time (Kamera -> Tentang) : 1497 ms
+   - Response Time (Tentang -> Kamera) : 1738 ms
+   - RAM saat di Halaman Tentang:
+     * JVM Heap                        : 8.54 MB
+     * Native Heap                     : 18.66 MB
+     * Total RAM (PSS)                 : 143.16 MB
+
+E. TRANSISI NAVIGASI GALERI -> HALAMAN HASIL
+   - Response Time (Pilih Galeri -> Hasil) : 2761 ms
+   - Response Time (Hasil -> Kamera Utama) : 1725 ms
+   - RAM saat di Halaman Hasil (Galeri):
+     * JVM Heap                            : 11.75 MB
+     * Native Heap                         : 20.15 MB
+     * Total RAM (PSS)                     : 143.16 MB
+
+F. TRANSISI NAVIGASI CAPTURE (SHUTTER) -> HALAMAN HASIL
+   - Response Time (Shutter Capture -> Hasil) : 687 ms
+   - Response Time (Hasil -> Kamera Utama)   : 1488 ms
+   - Response Time Tombol Simpan Galeri      : 610 ms
+   - RAM saat di Halaman Hasil (Capture):
+     * JVM Heap                               : 10.23 MB
+     * Native Heap                            : 19.79 MB
+     * Total RAM (PSS)                        : 143.16 MB
+
+====================================================
+                 PENGUJIAN SELESAI
+====================================================

@@ -1,0 +1,12 @@
+fruits_fresh_banana
+fruits_fresh_mango
+fruits_fresh_orange
+fruits_rotten_banana
+fruits_rotten_mango
+fruits_rotten_orange
+vegetables_fresh_carrot
+vegetables_fresh_cucumber
+vegetables_fresh_tomato
+vegetables_rotten_carrot
+vegetables_rotten_cucumber
+vegetables_rotten_tomato

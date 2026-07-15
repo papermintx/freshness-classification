@@ -1,0 +1,15 @@
+source,class_name,num_images
+train,fresh orange,244
+train,fresh banana,240
+train,fresh mango,240
+train,rotten banana,240
+train,rotten mango,240
+train,rotten orange,240
+train,fresh carrot,240
+train,fresh cucumber,240
+train,fresh tomato,240
+train,rotten carrot,240
+train,rotten cucumber,240
+train,rotten tomato,240
+test,fruits,60
+test,vegetables,60
