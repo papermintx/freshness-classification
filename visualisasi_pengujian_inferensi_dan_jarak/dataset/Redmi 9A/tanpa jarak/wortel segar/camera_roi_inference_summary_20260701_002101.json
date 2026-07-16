@@ -1,0 +1,23 @@
+{
+  "sessionId": "camera_roi_20260701_002036",
+  "actualLabel": "vegetables_fresh_carrot",
+  "distanceCm": null,
+  "cameraLensFacing": "Belakang",
+  "cameraFpsRange": "10-10|15-15|15-20|20-20|5-30|30-30",
+  "cameraMaxFps": 30,
+  "cameraMegapixels": 13.12896,
+  "cameraResolution": "4208x3120",
+  "totalCaptures": 100,
+  "correctPrediction": 100,
+  "wrongPrediction": 0,
+  "accuracy": 1,
+  "meanInferenceMs": 85.40386924000003,
+  "medianInferenceMs": 82.867077,
+  "minInferenceMs": 49.775384,
+  "maxInferenceMs": 140.347461,
+  "p95InferenceMs": 122.568692,
+  "meanPreprocessingMs": 19.291649220000004,
+  "meanRoiCropMs": 2.4394838599999997,
+  "meanIntervalSincePreviousInferenceMs": 168.67278399999998,
+  "meanTotalMs": 160.90133533000002
+}

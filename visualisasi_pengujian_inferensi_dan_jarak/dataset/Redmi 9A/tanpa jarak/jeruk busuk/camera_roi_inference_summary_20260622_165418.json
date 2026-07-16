@@ -1,0 +1,23 @@
+{
+  "sessionId": "camera_roi_20260622_165353",
+  "actualLabel": "fruits_rotten_orange",
+  "distanceCm": null,
+  "cameraLensFacing": "Belakang",
+  "cameraFpsRange": "10-10|15-15|15-20|20-20|5-30|30-30",
+  "cameraMaxFps": 30,
+  "cameraMegapixels": 13.12896,
+  "cameraResolution": "4208x3120",
+  "totalCaptures": 100,
+  "correctPrediction": 100,
+  "wrongPrediction": 0,
+  "accuracy": 1,
+  "meanInferenceMs": 89.96813546000003,
+  "medianInferenceMs": 94.094154,
+  "minInferenceMs": 49.293077,
+  "maxInferenceMs": 136.337308,
+  "p95InferenceMs": 119.341,
+  "meanPreprocessingMs": 16.844443150000004,
+  "meanRoiCropMs": 1.9344268699999996,
+  "meanIntervalSincePreviousInferenceMs": 160.71823932323235,
+  "meanTotalMs": 155.46884311
+}

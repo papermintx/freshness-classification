@@ -1,0 +1,23 @@
+{
+  "sessionId": "camera_roi_20260622_163538",
+  "actualLabel": "fruits_fresh_banana",
+  "distanceCm": 10,
+  "cameraLensFacing": "Belakang",
+  "cameraFpsRange": "10-10|15-15|15-20|20-20|5-30|30-30",
+  "cameraMaxFps": 30,
+  "cameraMegapixels": 13.12896,
+  "cameraResolution": "4208x3120",
+  "totalCaptures": 30,
+  "correctPrediction": 30,
+  "wrongPrediction": 0,
+  "accuracy": 1,
+  "meanInferenceMs": 86.77507706666668,
+  "medianInferenceMs": 78.961231,
+  "minInferenceMs": 51.187462,
+  "maxInferenceMs": 157.125615,
+  "p95InferenceMs": 145.711846,
+  "meanPreprocessingMs": 16.056197466666667,
+  "meanRoiCropMs": 1.9783487,
+  "meanIntervalSincePreviousInferenceMs": 168.36427058620694,
+  "meanTotalMs": 162.27544606666663
+}

@@ -1,0 +1,23 @@
+{
+  "sessionId": "camera_roi_20260701_002816",
+  "actualLabel": "vegetables_rotten_tomato",
+  "distanceCm": null,
+  "cameraLensFacing": "Belakang",
+  "cameraFpsRange": "10-10|15-15|15-20|20-20|5-30|30-30",
+  "cameraMaxFps": 30,
+  "cameraMegapixels": 13.12896,
+  "cameraResolution": "4208x3120",
+  "totalCaptures": 100,
+  "correctPrediction": 92,
+  "wrongPrediction": 8,
+  "accuracy": 0.92,
+  "meanInferenceMs": 96.74055077000001,
+  "medianInferenceMs": 99.750461,
+  "minInferenceMs": 47.151923,
+  "maxInferenceMs": 139.666847,
+  "p95InferenceMs": 125.801539,
+  "meanPreprocessingMs": 16.666128470000004,
+  "meanRoiCropMs": 2.11359151,
+  "meanIntervalSincePreviousInferenceMs": 168.2108057676767,
+  "meanTotalMs": 163.05544153
+}

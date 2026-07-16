@@ -3,11 +3,21 @@
 # ============================================================
 
 # ------------------------------------------------------------
-# DATASET — Abaikan semua gambar dataset (ukuran terlalu besar)
-# Dataset dapat diunduh dari link di README masing-masing
+# DATASET — Hanya abaikan file GAMBAR (ukuran besar)
+# File CSV / JSON / TXT tetap di-track
 # ------------------------------------------------------------
-modeling/dataset/
-visualisasi_pengujian_inferensi_dan_jarak/dataset/
+modeling/dataset/**/*.jpg
+modeling/dataset/**/*.jpeg
+modeling/dataset/**/*.png
+modeling/dataset/**/*.JPG
+modeling/dataset/**/*.JPEG
+modeling/dataset/**/*.PNG
+visualisasi_pengujian_inferensi_dan_jarak/dataset/**/*.jpg
+visualisasi_pengujian_inferensi_dan_jarak/dataset/**/*.jpeg
+visualisasi_pengujian_inferensi_dan_jarak/dataset/**/*.png
+visualisasi_pengujian_inferensi_dan_jarak/dataset/**/*.JPG
+visualisasi_pengujian_inferensi_dan_jarak/dataset/**/*.JPEG
+visualisasi_pengujian_inferensi_dan_jarak/dataset/**/*.PNG
 
 # ------------------------------------------------------------
 # Android Build (CnnFreshScan)

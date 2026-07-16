@@ -1,0 +1,23 @@
+{
+  "sessionId": "camera_roi_20260701_005348",
+  "actualLabel": "vegetables_rotten_carrot",
+  "distanceCm": null,
+  "cameraLensFacing": "Belakang",
+  "cameraFpsRange": "15-15|8-30|30-30",
+  "cameraMaxFps": 30,
+  "cameraMegapixels": 12,
+  "cameraResolution": "4000x3000",
+  "totalCaptures": 100,
+  "correctPrediction": 100,
+  "wrongPrediction": 0,
+  "accuracy": 1,
+  "meanInferenceMs": 33.041627749999996,
+  "medianInferenceMs": 30.267972,
+  "minInferenceMs": 19.346148,
+  "maxInferenceMs": 60.672089,
+  "p95InferenceMs": 52.674328,
+  "meanPreprocessingMs": 6.990863129999999,
+  "meanRoiCropMs": 1.6720173,
+  "meanIntervalSincePreviousInferenceMs": 56.55661653535354,
+  "meanTotalMs": 49.8564268
+}

@@ -1,0 +1,23 @@
+{
+  "sessionId": "camera_roi_20260701_002547",
+  "actualLabel": "vegetables_rotten_cucumber",
+  "distanceCm": null,
+  "cameraLensFacing": "Belakang",
+  "cameraFpsRange": "10-10|15-15|15-20|20-20|5-30|30-30",
+  "cameraMaxFps": 30,
+  "cameraMegapixels": 13.12896,
+  "cameraResolution": "4208x3120",
+  "totalCaptures": 100,
+  "correctPrediction": 50,
+  "wrongPrediction": 50,
+  "accuracy": 0.5,
+  "meanInferenceMs": 88.45972464999998,
+  "medianInferenceMs": 90.22777,
+  "minInferenceMs": 49.414,
+  "maxInferenceMs": 147.06023,
+  "p95InferenceMs": 122.041462,
+  "meanPreprocessingMs": 16.527497739999998,
+  "meanRoiCropMs": 2.1318853599999996,
+  "meanIntervalSincePreviousInferenceMs": 160.09607771717165,
+  "meanTotalMs": 155.05310617000006
+}

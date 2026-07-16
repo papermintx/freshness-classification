@@ -1,0 +1,23 @@
+{
+  "sessionId": "camera_roi_20260622_164114",
+  "actualLabel": "fruits_rotten_mango",
+  "distanceCm": 10,
+  "cameraLensFacing": "Belakang",
+  "cameraFpsRange": "10-10|15-15|15-20|20-20|5-30|30-30",
+  "cameraMaxFps": 30,
+  "cameraMegapixels": 13.12896,
+  "cameraResolution": "4208x3120",
+  "totalCaptures": 30,
+  "correctPrediction": 30,
+  "wrongPrediction": 0,
+  "accuracy": 1,
+  "meanInferenceMs": 80.0818206,
+  "medianInferenceMs": 81.609846,
+  "minInferenceMs": 51.760462,
+  "maxInferenceMs": 113.671616,
+  "p95InferenceMs": 110.722308,
+  "meanPreprocessingMs": 15.4940898,
+  "meanRoiCropMs": 2.0443026,
+  "meanIntervalSincePreviousInferenceMs": 160.4106100689655,
+  "meanTotalMs": 154.9206743
+}

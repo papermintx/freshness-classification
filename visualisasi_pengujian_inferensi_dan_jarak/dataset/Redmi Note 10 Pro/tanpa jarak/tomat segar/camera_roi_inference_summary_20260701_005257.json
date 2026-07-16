@@ -1,0 +1,23 @@
+{
+  "sessionId": "camera_roi_20260701_005236",
+  "actualLabel": "vegetables_fresh_tomato",
+  "distanceCm": null,
+  "cameraLensFacing": "Belakang",
+  "cameraFpsRange": "15-15|8-30|30-30",
+  "cameraMaxFps": 30,
+  "cameraMegapixels": 12,
+  "cameraResolution": "4000x3000",
+  "totalCaptures": 100,
+  "correctPrediction": 100,
+  "wrongPrediction": 0,
+  "accuracy": 1,
+  "meanInferenceMs": 32.34393289,
+  "medianInferenceMs": 31.137555,
+  "minInferenceMs": 21.227346,
+  "maxInferenceMs": 54.936672,
+  "p95InferenceMs": 43.89563,
+  "meanPreprocessingMs": 7.299338239999998,
+  "meanRoiCropMs": 1.684597039999999,
+  "meanIntervalSincePreviousInferenceMs": 56.88011615151513,
+  "meanTotalMs": 49.76204404999998
+}
