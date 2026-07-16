@@ -1,4 +1,4 @@
-﻿# ============================================================
+# ============================================================
 # .gitignore — Root Lampiran Kode Skripsi
 # ============================================================
 
@@ -24,21 +24,13 @@ CnnFreshScan/*.jks
 CnnFreshScan/*.keystore
 CnnFreshScan/*.pk8
 CnnFreshScan/*.pem
+CnnFreshScan/release.properties
 CnnFreshScan/captures/
 CnnFreshScan/.kotlin/
+CnnFreshScan/.agents/
 
-# Android Studio / IntelliJ IDEA
-CnnFreshScan/.idea/caches/
-CnnFreshScan/.idea/libraries/
-CnnFreshScan/.idea/modules.xml
-CnnFreshScan/.idea/workspace.xml
-CnnFreshScan/.idea/navEditor.xml
-CnnFreshScan/.idea/assetWizardSettings.xml
-CnnFreshScan/.idea/deploymentTargetSelector.xml
-CnnFreshScan/.idea/androidTestResultsUserPreferences.xml
-CnnFreshScan/.idea/git_toolbox_prj.cfg
-CnnFreshScan/.idea/git_toolbox_prj.xml
-CnnFreshScan/.idea/vcs.xml
+# Android Studio / IntelliJ IDEA (semua di-ignore)
+CnnFreshScan/.idea/
 CnnFreshScan/*.iml
 CnnFreshScan/*.ipr
 CnnFreshScan/*.iws

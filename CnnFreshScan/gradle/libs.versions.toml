@@ -24,6 +24,7 @@ navigationCompose = "2.9.8"
 cameraX = "1.6.1"
 playServicesTfliteJava = "16.5.0"
 playServicesTfliteSupport = "16.5.0"
+playServicesTfliteGpu = "16.5.0"
 tensorflowLite = "2.15.0"
 tensorflowLiteSupport = "0.4.4"
 icon = "1.7.8"
@@ -68,6 +69,7 @@ kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-cor
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 play-services-tflite-java = { module = "com.google.android.gms:play-services-tflite-java", version.ref = "playServicesTfliteJava" }
 play-services-tflite-support = { module = "com.google.android.gms:play-services-tflite-support", version.ref = "playServicesTfliteSupport" }
+play-services-tflite-gpu = { module = "com.google.android.gms:play-services-tflite-gpu", version.ref = "playServicesTfliteGpu" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }

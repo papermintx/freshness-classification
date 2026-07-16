@@ -3,7 +3,9 @@ package com.skripsi.tflite_engine
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
+import com.google.android.gms.tflite.gpu.support.TfLiteGpu
 import com.google.android.gms.tflite.java.TfLite
+import com.google.android.gms.tflite.client.TfLiteInitializationOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -16,14 +18,14 @@ import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
 import org.tensorflow.lite.support.label.TensorLabel
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import org.tensorflow.lite.gpu.GpuDelegateFactory
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
-import kotlin.math.roundToInt
 
 class TFLiteClassifier(private val context: Context) : ProduceClassifier {
 
-    override val modelName: String = "mobilenetv2_int8.tflite"
-    override val modelFormat: String = "TensorFlow Lite INT8"
+    override val modelName: String = "mobilenetv2_float16.tflite"
+    override val modelFormat: String = "TensorFlow Lite Float16"
     override val inputWidth: Int = 224
     override val inputHeight: Int = 224
 
@@ -37,6 +39,8 @@ class TFLiteClassifier(private val context: Context) : ProduceClassifier {
 
     /**
      * Initializes the TFLite interpreter using Google Play Services.
+     * Menggunakan GPU Delegate untuk inferensi Float16 yang lebih cepat.
+     * Jika GPU tidak didukung, otomatis fallback ke CPU.
      * This method must be called before classify().
      * returns true if initialization is successful, false otherwise.
      */
@@ -47,16 +51,36 @@ class TFLiteClassifier(private val context: Context) : ProduceClassifier {
         }
         return withContext(Dispatchers.IO) {
             try {
-                // Initialize TFLite runtime from Google Play Services
-                TfLite.initialize(context).await()
+                // Langkah 1: Cek apakah GPU Delegate tersedia di perangkat ini
+                val isGpuAvailable = try {
+                    TfLiteGpu.isGpuDelegateAvailable(context).await()
+                } catch (e: Exception) {
+                    Log.w("TFLiteClassifier", "⚠️ Gagal cek GPU availability: ${e.message}")
+                    false
+                }
+                Log.d("TFLiteClassifier", "GPU available: $isGpuAvailable")
 
-                // Load file .tflite dari folder assets
+                // Langkah 2: Initialize TFLite runtime dengan GPU support jika tersedia.
+                // Menggunakan TfLiteInitializationOptions dari com.google.android.gms.tflite.client
+                val initOptions = TfLiteInitializationOptions.builder()
+                    .setEnableGpuDelegateSupport(isGpuAvailable)
+                    .build()
+                TfLite.initialize(context, initOptions).await()
+
+                // Langkah 3: Load file .tflite dari folder assets
                 val modelFile = FileUtil.loadMappedFile(context, modelName)
 
-                // Setting options
+                // Langkah 4: Konfigurasi InterpreterApi Options
                 val options = InterpreterApi.Options().apply {
                     setRuntime(InterpreterApi.Options.TfLiteRuntime.FROM_SYSTEM_ONLY)
-                    numThreads = 4
+                    if (isGpuAvailable) {
+                        // Gunakan GpuDelegateFactory agar tidak melanggar batasan Play Services TFLite
+                        addDelegateFactory(GpuDelegateFactory())
+                        Log.d("TFLiteClassifier", "🚀 GPU Delegate aktif! Float16 inferensi di GPU")
+                    } else {
+                        numThreads = 4
+                        Log.w("TFLiteClassifier", "⚠️ GPU tidak tersedia, fallback ke CPU (4 threads)")
+                    }
                 }
 
                 // Create the InterpreterApi instance
@@ -66,15 +90,15 @@ class TFLiteClassifier(private val context: Context) : ProduceClassifier {
                 Log.d("TFLiteClassifier", "Loading labels from labels.txt")
                 labels = FileUtil.loadLabels(context, "labels.txt")
                 Log.d("TFLiteClassifier", "✓ Labels loaded: ${labels.size} classes")
-                
+
                 if (labels.isEmpty()) {
                     throw IllegalStateException("Labels file is empty!")
                 }
-                
+
                 Log.d("TFLiteClassifier", "🎯 Class labels: $labels")
 
                 isInitialized = true
-                Log.d("TFLiteClassifier", "✅ Mesin AI Siap! Total kelas: ${labels.size}")
+                Log.d("TFLiteClassifier", "✅ Mesin AI Siap! Model: $modelName | Total kelas: ${labels.size}")
                 true
             } catch (e: Exception) {
                 Log.e("TFLiteClassifier", "❌ Gagal initialize model", e)
@@ -95,12 +119,13 @@ class TFLiteClassifier(private val context: Context) : ProduceClassifier {
 
         try {
             Log.d("TFLiteClassifier", "Processing bitmap: ${bitmap.width}x${bitmap.height}")
-            
-            // 1. Ubah Bitmap jadi format FLOAT32 (selalu FLOAT32 untuk TensorImage agar tidak crash)
+
+            // 1. Load Bitmap ke TensorImage FLOAT32
             var tensorImage = TensorImage(DataType.FLOAT32)
             tensorImage.load(bitmap)
 
-            // 2. Resize gambar otomatis jadi 224x224 & Normalize
+            // 2. Resize gambar otomatis jadi 224x224 & Normalize ke [-1, 1]
+            // Float16 model menggunakan range yang sama dengan Float32 MobileNetV2
             val imageProcessor = ImageProcessor.Builder()
                 .add(ResizeOp(imageSizeY, imageSizeX, ResizeOp.ResizeMethod.BILINEAR))
                 .add(NormalizeOp(127.5f, 127.5f)) // MobileNetV2: normalize pixel [0,255] ke [-1,1]
@@ -128,8 +153,10 @@ class TFLiteClassifier(private val context: Context) : ProduceClassifier {
     override fun getLabelCount(): Int = labels.size
 
     /**
-     * Melakukan inference pada TensorImage yang sudah di-preprocess
-     * Method ini dipanggil oleh repository layer setelah preprocessing
+     * Melakukan inference pada TensorImage yang sudah di-preprocess.
+     * Float16 model: input dan output bertipe FLOAT32 di sisi Java/Kotlin,
+     * konversi ke Float16 dilakukan otomatis oleh GPU Delegate secara internal.
+     * Method ini dipanggil oleh repository layer setelah preprocessing.
      */
     override fun classifyFromTensor(tensorImage: TensorImage): List<TFLiteResult> {
         if (!isInitialized || interpreter == null) {
@@ -138,50 +165,14 @@ class TFLiteClassifier(private val context: Context) : ProduceClassifier {
         }
 
         try {
-            Log.d("TFLiteClassifier", "🔍 Running inference on preprocessed tensor...")
-            
-            // Get input tensor details
-            val inputTensor = interpreter?.getInputTensor(0) ?: throw IllegalStateException("Input tensor not found")
-            val inputDataType = inputTensor.dataType()
-            
-            // Convert to byte buffer if model expects INT8 or UINT8 input
-            val inputBuffer = if (inputDataType == DataType.INT8 || inputDataType == DataType.UINT8) {
-                val quantizationParams = inputTensor.quantizationParams()
-                val scale = quantizationParams.scale
-                val zeroPoint = quantizationParams.zeroPoint
+            Log.d("TFLiteClassifier", "🔍 Running Float16 inference on GPU...")
 
-                val floatValues = tensorImage.tensorBuffer.floatArray
-                val byteBuffer = ByteBuffer.allocateDirect(floatValues.size)
-                byteBuffer.order(ByteOrder.nativeOrder())
+            // Input: langsung gunakan FLOAT32 buffer dari TensorImage
+            // GPU Delegate menangani konversi Float32 → Float16 secara internal
+            val inputBuffer: ByteBuffer = tensorImage.buffer
 
-                if (inputDataType == DataType.INT8) {
-                    for (value in floatValues) {
-                        val quantValue =
-                            ((value / scale) + zeroPoint)
-                                .roundToInt()
-                                .coerceIn(-128, 127)
-                                .toByte()
-                        byteBuffer.put(quantValue)
-                    }
-                } else {
-                    for (value in floatValues) {
-                        val quantValue = ((value / scale) + zeroPoint).roundToInt().coerceIn(0, 255).toByte()
-                        byteBuffer.put(quantValue)
-                    }
-                }
-                byteBuffer.rewind()
-                byteBuffer
-            } else {
-                tensorImage.buffer
-            }
-            
-            // Get output tensor details
-            val outputTensor = interpreter?.getOutputTensor(0) ?: throw IllegalStateException("Output tensor not found")
-            val outputDataType = outputTensor.dataType()
-            
-            // Allocate a raw direct ByteBuffer for output to prevent TensorBuffer type errors
-            val elementSize = if (outputDataType == DataType.FLOAT32) 4 else 1
-            val outputBufferSize = labels.size * elementSize
+            // Output: alokasikan buffer FLOAT32 (4 bytes per float)
+            val outputBufferSize = labels.size * 4 // 4 bytes per FLOAT32
             val outputBuffer = ByteBuffer.allocateDirect(outputBufferSize)
             outputBuffer.order(ByteOrder.nativeOrder())
 
@@ -189,57 +180,32 @@ class TFLiteClassifier(private val context: Context) : ProduceClassifier {
             interpreter?.run(inputBuffer, outputBuffer)
             Log.d("TFLiteClassifier", "✓ Inference completed")
 
-            // Dequantize the output manually if needed, and prepare a float array
-            val floatValues = when (outputDataType) {
-                DataType.INT8 -> {
-                    val scale = outputTensor.quantizationParams().scale
-                    val zeroPoint = outputTensor.quantizationParams().zeroPoint
-                    val quantizedOutput = ByteArray(labels.size)
-                    outputBuffer.rewind()
-                    outputBuffer.get(quantizedOutput)
-                    FloatArray(quantizedOutput.size) { i ->
-                        (quantizedOutput[i].toFloat() - zeroPoint) * scale
-                    }
-                }
-                DataType.UINT8 -> {
-                    val scale = outputTensor.quantizationParams().scale
-                    val zeroPoint = outputTensor.quantizationParams().zeroPoint
-                    val quantizedOutput = ByteArray(labels.size)
-                    outputBuffer.rewind()
-                    outputBuffer.get(quantizedOutput)
-                    FloatArray(quantizedOutput.size) { i ->
-                        ((quantizedOutput[i].toInt() and 0xFF).toFloat() - zeroPoint) * scale
-                    }
-                }
-                else -> {
-                    val tempFloats = FloatArray(labels.size)
-                    outputBuffer.rewind()
-                    outputBuffer.asFloatBuffer().get(tempFloats)
-                    tempFloats
-                }
-            }
+            // Baca output langsung sebagai FloatArray (tidak perlu dequantize)
+            val floatValues = FloatArray(labels.size)
+            outputBuffer.rewind()
+            outputBuffer.asFloatBuffer().get(floatValues)
 
-            // Create a float-based TensorBuffer for TensorLabel mapping (FLOAT32 is fully supported by TensorBuffer)
-            val dequantizedBuffer = TensorBuffer.createFixedSize(intArrayOf(1, labels.size), DataType.FLOAT32)
-            dequantizedBuffer.loadArray(floatValues)
+            // Bungkus ke TensorBuffer FLOAT32 untuk mapping label
+            val outputTensorBuffer = TensorBuffer.createFixedSize(intArrayOf(1, labels.size), DataType.FLOAT32)
+            outputTensorBuffer.loadArray(floatValues)
 
-            // Map probabilities to labels
-            val tensorLabel = TensorLabel(labels, dequantizedBuffer)
+            // Map probabilities ke label
+            val tensorLabel = TensorLabel(labels, outputTensorBuffer)
             val floatMap = tensorLabel.mapWithFloatValue
 
-            // Sort by confidence descending and map to TFLiteResult
+            // Sort by confidence descending dan map ke TFLiteResult
             val results = floatMap.entries
                 .sortedByDescending { it.value }
                 .map {
                     TFLiteResult(label = it.key, confidence = it.value)
                 }
-            
+
             // Log top 3 results
             Log.d("TFLiteClassifier", "📊 Top predictions:")
             results.take(3).forEachIndexed { index, result ->
                 Log.d("TFLiteClassifier", "  ${index + 1}. ${result.label}: ${(result.confidence * 100).toInt()}%")
             }
-            
+
             return results
 
         } catch (e: Exception) {

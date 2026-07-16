@@ -149,7 +149,7 @@ class CameraBenchmarkViewModel @Inject constructor(
                 cameraMegapixels = cameraMegapixels,
                 cameraResolution = cameraResolution,
                 bitmap = bitmap,
-                saveRoiImage = true
+                saveRoiImage = false
             )
         }.onSuccess { result ->
             val updatedResults = _uiState.value.results + result

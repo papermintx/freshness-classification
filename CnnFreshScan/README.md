@@ -15,6 +15,7 @@
   <img src="https://img.shields.io/badge/Kotlin-2.0.21-7F52FF?logo=kotlin&logoColor=white" alt="Kotlin" />
   <img src="https://img.shields.io/badge/Jetpack%20Compose-Material3-4285F4?logo=jetpackcompose&logoColor=white" alt="Compose" />
   <img src="https://img.shields.io/badge/TensorFlow%20Lite-Play%20Services-FF6F00?logo=tensorflow&logoColor=white" alt="TFLite" />
+  <img src="https://img.shields.io/badge/Akselerasi-GPU%20Delegate-orange?logo=nvidia&logoColor=white" alt="GPU Acceleration" />
   <img src="https://img.shields.io/badge/License-Academic%20Use-orange" alt="License" />
 </p>
 
@@ -45,7 +46,7 @@
 
 **CnnFreshScan** adalah aplikasi Android yang dikembangkan sebagai bagian dari penelitian tugas akhir (skripsi) untuk mengklasifikasikan tingkat kesegaran buah dan sayur menggunakan model **Convolutional Neural Network (CNN)** dengan arsitektur **MobileNetV2**.
 
-Aplikasi ini memanfaatkan kamera perangkat Android untuk mendeteksi dan mengklasifikasikan objek buah/sayur secara **real-time** ke dalam dua kategori kondisi: **Segar (Fresh)** atau **Busuk (Rotten)**. Model machine learning dijalankan secara on-device menggunakan **TensorFlow Lite** melalui **Google Play Services**, sehingga tidak memerlukan koneksi internet untuk melakukan inferensi.
+Aplikasi ini memanfaatkan kamera perangkat Android untuk mendeteksi dan mengklasifikasikan objek buah/sayur secara **real-time** ke dalam dua kategori kondisi: **Segar (Fresh)** atau **Busuk (Rotten)**. Model machine learning dijalankan secara on-device menggunakan **TensorFlow Lite (Float16)** melalui **Google Play Services** dengan akselerasi **GPU Delegate** untuk performa inferensi yang sangat cepat.
 
 ### Tujuan Penelitian
 
@@ -147,8 +148,9 @@ Aplikasi ini dibangun menggunakan pendekatan **Clean Architecture** dengan pola 
 │  └─────────────────────┘  └──────┬──────────────────┘      │
 │                                  │                          │
 │                           ┌──────▼──────────────────┐      │
-│                           │    mobilenetv2_int8     │      │
-│                           │     .tflite (2.60 MB)   │      │
+│                           │   mobilenetv2_float16   │      │
+│                           │   .tflite (4.28 MB) +   │      │
+│                           │      GPU Delegate       │      │
 │                           └─────────────────────────┘      │
 └──────────────────────────────────────────────────────────────┘
 ```
@@ -239,9 +241,9 @@ Modul yang menangani seluruh operasi machine learning menggunakan TensorFlow Lit
 | File | Deskripsi |
 |---|---|
 | `ProduceClassifier.kt` | Interface abstraksi untuk classifier (kontrak) |
-| `TFLiteClassifier.kt` | Implementasi classifier menggunakan TFLite Play Services |
+| `TFLiteClassifier.kt` | Implementasi classifier menggunakan TFLite Play Services + GPU Delegate |
 | `TFLiteResult.kt` | Data class hasil inferensi TFLite (label + confidence) |
-| `assets/mobilenetv2_int8.tflite` | Model MobileNetV2 INT8 (2.60 MB) |
+| `assets/mobilenetv2_float16.tflite` | Model MobileNetV2 Float16 (4.28 MB) |
 | `assets/labels.txt` | File label 12 kelas klasifikasi |
 
 ---
@@ -284,7 +286,8 @@ Modul yang menangani seluruh operasi machine learning menggunakan TensorFlow Lit
 |---|---|---|
 | TFLite Java (Play Services) | 16.5.0 | Runtime TFLite via Google Play Services |
 | TFLite Support (Play Services) | 16.5.0 | Library pendukung (ImageProcessor, TensorImage) |
-| MobileNetV2 INT8 | — | Model CNN (2.60 MB), input 224×224 |
+| TFLite GPU (Play Services) | 16.5.0 | Library akselerasi hardware GPU |
+| MobileNetV2 Float16 | — | Model CNN (4.28 MB), input 224×224 |
 
 ### Dependency Injection
 
@@ -335,14 +338,14 @@ Modul yang menangani seluruh operasi machine learning menggunakan TensorFlow Lit
 | Parameter | Nilai |
 |---|---|
 | **Arsitektur** | MobileNetV2 |
-| **Format** | TensorFlow Lite (INT8 quantized) |
-| **Ukuran File** | 2.60 MB |
+| **Format** | TensorFlow Lite (Float16 quantized) |
+| **Ukuran File** | 4.28 MB |
 | **Input Shape** | `[1, 224, 224, 3]` (batch, height, width, RGB) |
 | **Output Shape** | `[1, 12]` (probabilitas 12 kelas) |
 | **Normalisasi** | `(pixel - 127.5) / 127.5` → range [-1, 1] |
 | **Resize Method** | Bilinear Interpolation |
-| **Runtime** | Google Play Services TFLite |
-| **Thread Count** | 4 |
+| **Runtime** | Google Play Services TFLite + GPU Delegate |
+| **Hardware Accelerator**| Mobile GPU (Auto fallback to CPU if unsupported) |
 
 ### Pipeline Preprocessing
 
@@ -458,7 +461,7 @@ CnnFreshScan/
 │       │   ├── TFLiteClassifier.kt         # Implementasi TFLite
 │       │   └── TFLiteResult.kt             # Data class hasil inferensi
 │       └── assets/
-│           ├── mobilenetv2_int8.tflite     # Model CNN (2.60 MB)
+│           ├── mobilenetv2_float16.tflite  # Model CNN (4.28 MB)
 │           └── labels.txt                  # 12 label kelas
 │
 ├── docs/                                   # Dokumentasi

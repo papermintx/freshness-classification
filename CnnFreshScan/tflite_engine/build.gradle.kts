@@ -43,6 +43,7 @@ dependencies {
     // Google Play Services for TFLite
     implementation(libs.play.services.tflite.java)
     implementation(libs.play.services.tflite.support)
+    implementation(libs.play.services.tflite.gpu) // GPU Delegate untuk Float16 inference
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)

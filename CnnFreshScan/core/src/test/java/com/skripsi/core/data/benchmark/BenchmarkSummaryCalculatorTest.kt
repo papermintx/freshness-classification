@@ -44,7 +44,7 @@ class BenchmarkSummaryCalculatorTest {
         sessionId = "session-test",
         deviceName = "test-device",
         androidVersion = "Android test",
-        modelName = "mobilenetv2_int8.tflite",
+        modelName = "mobilenetv2_float16.tflite",
         modelFormat = "TensorFlow Lite float16",
         captureIndex = index,
         distanceCm = 10,
