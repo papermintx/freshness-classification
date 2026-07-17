@@ -128,8 +128,8 @@ lampiran kode/
 | Parameter | Nilai |
 |---|---|
 | **Arsitektur** | MobileNetV2 |
-| **Format** | TensorFlow Lite (INT8 Quantized) |
-| **Ukuran File** | 2.60 MB |
+| **Format** | TensorFlow Lite float16 |
+| **Ukuran File** | 4.28 MB |
 | **Input** | `[1, 224, 224, 3]` |
 | **Output** | `[1, 12]` — probabilitas 12 kelas |
 
@@ -144,13 +144,13 @@ Pipeline training model menggunakan metodologi **CRISP-DM** dengan dua tahap:
 | Notebook | Lingkungan | Fungsi |
 |---|---|---|
 | [`01_local_processing.ipynb`](modeling/notebooks/01_local_processing.ipynb) | Lokal (Python) | Scan data, cleaning, padding, augmentasi & penyeimbangan kelas |
-| [`02_colab_training_and_deployment.ipynb`](modeling/notebooks/02_colab_training_and_deployment.ipynb) | Google Colab (GPU) | Training K-Fold, evaluasi, konversi ke TFLite INT8 |
+| [`02_colab_training_and_deployment.ipynb`](modeling/notebooks/02_colab_training_and_deployment.ipynb) | Google Colab (GPU) | Training K-Fold, evaluasi, konversi ke TFLite |
 
 ### Konfigurasi Training
 
 - **Arsitektur**: MobileNetV2 (pretrained ImageNet, fine-tuned)
 - **Validasi**: K-Fold Cross Validation
-- **Kuantisasi**: INT8 Post-Training Quantization
+- **Kuantisasi**: Float16
 - **Input Preprocessing**: Padding → Resize 224×224 → Normalisasi `[-1, 1]`
 
 > 📖 Untuk panduan lengkap menjalankan notebook, lihat [`modeling/README.md`](modeling/README.md)
