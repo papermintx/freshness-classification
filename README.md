@@ -272,6 +272,9 @@ Berikut adalah contoh foto hasil klasifikasi yang disimpan otomatis oleh aplikas
 
 ---
 
+https://drive.google.com/drive/folders/1Qdir7aqJoeeiS1RN4Jouh1VnSGELJrg8?usp=sharing
+
+
 <p align="center">
   <sub>Dibuat dengan ❤️ oleh <strong>Muhamad Muslih</strong> — Program Studi Informatika, Universitas Sultan Ageng Tirtayasa</sub>
 </p>
